@@ -1,0 +1,19 @@
+package test.test;
+
+
+
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class theDemoSite {
+
+	@Test
+	public void test() {
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get("http://thedemosite.co.uk/");
+
+	}
+
+}

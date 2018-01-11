@@ -1,0 +1,50 @@
+package test.test;
+
+
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class theDemoSite {
+
+	@Test
+	public void test() throws InterruptedException {
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get("http://thedemosite.co.uk/addauser.php/");
+		assertEquals(driver.getCurrentUrl(), "http://thedemosite.co.uk/addauser.php/");
+		Thread.sleep(5000);
+		
+		WebElement registerInput = driver.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		
+		WebElement registerPassword = driver.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(2000);	
+		
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		driver.get("http://thedemosite.co.uk/login.php/");
+		assertEquals(driver.getCurrentUrl(), "http://thedemosite.co.uk/login.php/");
+		Thread.sleep(5000);
+		
+		WebElement loginInput = driver.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		
+		WebElement loginPassword = driver.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(2000);	
+		
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(5000);
+		
+		driver.quit();
+	}
+
+}

@@ -1,0 +1,103 @@
+package test.test;
+
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.testng.annotations.Test;
+
+public class theDemoSite {
+	
+	WebDriver driver;
+	WebDriver driver2;
+	ExtentReports extent;
+	ExtentTest logger;
+
+	
+	
+	@Test
+	public void chromeTest() throws InterruptedException {
+		driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver","C:\\Developo\\Web_driver\\chromedriver.exe");
+		
+		driver.get("http://thedemosite.co.uk/addauser.php");
+		Thread.sleep(2000);
+		
+		WebElement registerInput = driver.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		Thread.sleep(1000);
+		
+		WebElement registerPassword = driver.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(1000);	
+		
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		driver.get("http://thedemosite.co.uk/login.php");
+		Thread.sleep(3000);
+		
+		WebElement loginInput = driver.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		Thread.sleep(1000);	
+		
+		WebElement loginPassword = driver.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(1000);	
+		
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(1500);
+		
+		WebElement logInSuccess = driver.findElement(By.cssSelector(
+				"body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+		
+		assertEquals(logInSuccess.getText(), "**Successful Login**");
+		
+		driver.quit();
+	}
+	
+	@Test
+	public void fireFoxTest() throws InterruptedException {
+		driver2 = new FirefoxDriver();
+		System.setProperty("webdriver.gecko.driver", "C:\\Developo\\Web_driver\\geckodriver.exe");
+		
+		driver2.get("http://thedemosite.co.uk/addauser.php");
+		Thread.sleep(2000);
+		
+		WebElement registerInput = driver2.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		Thread.sleep(1000);
+		
+		WebElement registerPassword = driver2.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(1000);	
+		
+		driver2.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		driver2.get("http://thedemosite.co.uk/login.php");
+		Thread.sleep(3000);
+		
+		WebElement loginInput = driver2.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		Thread.sleep(1000);	
+		
+		WebElement loginPassword = driver2.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(1000);	
+		
+		driver2.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(1500);
+		
+		WebElement logInSuccess = driver2.findElement(By.cssSelector(
+				"body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+		
+		assertEquals(logInSuccess.getText(), "**Successful Login**");
+		
+		driver2.quit();
+	}
+}

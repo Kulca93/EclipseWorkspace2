@@ -1,0 +1,28 @@
+package test.test;
+
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class ChromeTestDriver {
+    
+    @Test
+    public void testGoogleSearch() throws InterruptedException {
+      // Optional, if not specified, WebDriver will search your path for chromedriver.
+      System.setProperty("webdriver.chrome.driver", "C:\\Developo\\Web_driver\\chromedriver.exe");
+
+      WebDriver driver = new ChromeDriver();
+      driver.get("https://www.google.co.uk/imghp");
+      Thread.sleep(5000);  // Let the user actually see something!
+      WebElement searchBox = driver.findElement(By.name("q"));
+      searchBox.sendKeys("best memes");
+      searchBox.submit();
+      Thread.sleep(5000);  // Let the user actually see something!
+      driver.quit();
+    }
+
+}
+
+

@@ -1,0 +1,104 @@
+package test.test;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class theDemoSite {
+	
+	WebDriver chromeDriver = new ChromeDriver();
+	WebDriver geckoDriver = new FirefoxDriver();
+	
+	@Before
+	public void before(){
+		System.setProperty("webdriver.chrome.driver","C:\\Developo\\Web_driver\\chromedriver.exe");
+		System.setProperty("webdriver.gecko.driver", "C:\\Developo\\Web_driver\\geckodriver.exe");
+	}
+	
+	@Test
+	public void Chrometest() throws InterruptedException {
+		
+		
+		
+		chromeDriver.get("http://thedemosite.co.uk/addauser.php");
+		Thread.sleep(2000);
+		
+		WebElement registerInput = chromeDriver.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		Thread.sleep(1000);
+		
+		WebElement registerPassword = chromeDriver.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(1000);	
+		
+		chromeDriver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		chromeDriver.get("http://thedemosite.co.uk/login.php");
+		Thread.sleep(3000);
+		
+		WebElement loginInput = chromeDriver.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		Thread.sleep(1000);	
+		
+		WebElement loginPassword = chromeDriver.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(1000);	
+		
+		chromeDriver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(1500);
+		
+		WebElement logInSuccess = chromeDriver.findElement(By.cssSelector(
+				"body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+		
+		assertEquals(logInSuccess.getText(), "**Successful Login**");
+		
+		chromeDriver.quit();
+	}
+	
+//	@Test
+//	public void Firefoxtest() throws InterruptedException {
+//		
+//		geckoDriver.get("http://thedemosite.co.uk/addauser.php");
+//		Thread.sleep(2000);
+//		
+//		WebElement registerInput = geckoDriver.findElement(By.name("username"));
+//		registerInput.sendKeys("Kulca93");
+//		Thread.sleep(1000);
+//		
+//		WebElement registerPassword = geckoDriver.findElement(By.name("password"));
+//		registerPassword.sendKeys("password"); 
+//		Thread.sleep(1000);	
+//		
+//		geckoDriver.findElement(By.name("FormsButton2")).click();
+//		Thread.sleep(2000);		
+//		
+//		geckoDriver.get("http://thedemosite.co.uk/login.php");
+//		Thread.sleep(3000);
+//		
+//		WebElement loginInput = geckoDriver.findElement(By.name("username"));
+//		loginInput.sendKeys("Kulca93");
+//		Thread.sleep(1000);	
+//		
+//		WebElement loginPassword = geckoDriver.findElement(By.name("password"));
+//		loginPassword.sendKeys("password");
+//		Thread.sleep(1000);	
+//		
+//		geckoDriver.findElement(By.name("FormsButton2")).click();
+//		Thread.sleep(1500);
+//		
+//		WebElement logInSuccess = geckoDriver.findElement(By.cssSelector(
+//				"body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+//		
+//		assertEquals(logInSuccess.getText(), "**Successful Login**");
+//		
+//		geckoDriver.quit();
+//	}
+
+}

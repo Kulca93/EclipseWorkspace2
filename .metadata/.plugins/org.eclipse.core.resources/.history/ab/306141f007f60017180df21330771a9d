@@ -1,0 +1,119 @@
+package test.test;
+
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+//import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class theDemoSite {
+	
+	WebDriver driver;
+	WebDriver driver2;
+	ExtentReports report;
+	ExtentTest test;	
+	
+	@Test
+	public void chromeTest() throws InterruptedException {
+		
+		// where to create the report file
+		report = new ExtentReports("C:\\Users\\Admin\\Desktop\\javaTesting\\Result\\automationreport.html", true);
+		test = report.startTest("Chrome Test"); //Start
+		
+		driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver","C:\\Developo\\Web_driver\\chromedriver.exe");
+		driver.get("http://thedemosite.co.uk/addauser.php");
+		Thread.sleep(2000);
+		
+		
+		//Register inputs
+		WebElement registerInput = driver.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		Thread.sleep(1000);
+		WebElement registerPassword = driver.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(1000);	
+		
+		//Click submit button
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		//Change to log in page
+		driver.get("http://thedemosite.co.uk/login.php");
+		Thread.sleep(3000);
+		
+		//Log in Inputs
+		WebElement loginInput = driver.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		Thread.sleep(1000);	
+		WebElement loginPassword = driver.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(1000);	
+		
+		//Click submit button
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(1500);
+		
+		//Find log in successful text
+		WebElement logInSuccess = driver.findElement(By.cssSelector(
+				"body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+		
+		String logInCheck = logInSuccess.getText();
+
+			if (logInCheck.equals("**Successful Login**")) {
+			test.log(LogStatus.PASS, "Chrome Test");
+		} else {
+			test.log(LogStatus.FAIL, "Chrome Test");
+		}
+		driver.quit();
+	}
+	
+	@Test
+	public void fireFoxTest() throws InterruptedException {
+		driver2 = new FirefoxDriver();
+		System.setProperty("webdriver.gecko.driver", "C:\\Developo\\Web_driver\\geckodriver.exe");
+		
+		driver2.get("http://thedemosite.co.uk/addauser.php");
+		Thread.sleep(2000);
+		
+		WebElement registerInput = driver2.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		Thread.sleep(1000);
+		
+		WebElement registerPassword = driver2.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(1000);	
+		
+		driver2.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		driver2.get("http://thedemosite.co.uk/login.php");
+		Thread.sleep(3000);
+		
+		WebElement loginInput = driver2.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		Thread.sleep(1000);	
+		
+		WebElement loginPassword = driver2.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(1000);	
+		
+		driver2.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(1500);
+		
+		WebElement logInSuccess = driver2.findElement(By.cssSelector(
+				"body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+		
+		assertEquals(logInSuccess.getText(), "**Successful Login**");
+		
+		driver2.quit();
+	}
+}

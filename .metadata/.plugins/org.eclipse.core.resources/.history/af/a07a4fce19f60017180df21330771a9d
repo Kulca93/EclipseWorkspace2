@@ -1,0 +1,49 @@
+package test.test;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class QaTools {
+	
+	WebDriver driver;
+	ExtentReports report;
+	ExtentTest test;	
+	
+	@Test(priority = 1, enabled = true)
+	public void openChrome() throws InterruptedException{
+		
+		report = new ExtentReports("C:\\Users\\Admin\\Desktop\\javaTesting\\QA_Tools\\Result\\chromeTest.html", true);
+		test = report.startTest("Open Website In Chrome");
+		
+		driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver","C:\\Developo\\Web_driver\\chromedriver.exe");
+		
+		driver.get("http://demoqa.com");
+		Thread.sleep(2000);
+		
+		String title = driver.getTitle();
+		
+		System.out.println(title);
+		
+		if (title.equals("Demoqa | Just another WordPress site")) {
+			// report the test as a pass
+			test.log(LogStatus.PASS, "Open Website In Chrome");
+		} else {
+			test.log(LogStatus.FAIL, "Open Website In Chrome");
+		}
+		
+		report.endTest(test);
+		report.flush();
+	}	
+	
+}
+
+

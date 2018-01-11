@@ -1,0 +1,99 @@
+package test.test;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class QaTools {
+	
+	WebDriver driver;
+	ExtentReports report;
+	ExtentTest test;	
+	
+	@Test(priority = 1, enabled = true)
+	public void openChrome() throws InterruptedException{
+		
+		report = new ExtentReports("C:\\Users\\Admin\\Desktop\\javaTesting\\QA_Tools\\Result\\Open_Chrome.html", true);
+		test = report.startTest("Open Website In Chrome");
+		
+		System.setProperty("webdriver.chrome.driver","C:\\Developo\\Web_driver\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("http://demoqa.com");
+		Thread.sleep(2000);
+		
+		String title = driver.getTitle();
+		
+		System.out.println(title);
+		
+		if (title.equals("Demoqa | Just another WordPress site")) {
+			// report the test as a pass
+			test.log(LogStatus.PASS, "Open Website In Chrome");
+		} else {
+			test.log(LogStatus.FAIL, "Open Website In Chrome");
+		}
+		
+
+		
+	}	
+	
+	@Test(priority = 2, enabled = true)
+	public void draggable() throws InterruptedException{
+	WebElement draggableNav = driver.findElement(By.cssSelector
+			("#menu-item-140"));
+	
+	draggableNav.click();
+	
+	}
+	
+	@Test(priority = 3, enabled = true)
+	public void droppabe() throws InterruptedException{
+	WebElement droppableNav = driver.findElement(By.cssSelector
+			("#menu-item-141"));
+	
+	droppableNav.click();
+	
+	
+	}
+	
+	@Test(priority = 4, enabled = true)
+	public void resizable() throws InterruptedException{
+	WebElement resizableNav = driver.findElement(By.cssSelector
+			("#menu-item-143"));
+	
+	resizableNav.click();
+	
+
+	}
+	
+	@Test(priority = 5, enabled = true)
+	public void selectable() throws InterruptedException{
+	WebElement selectableNav = driver.findElement(By.cssSelector
+			("#menu-item-142"));
+	
+	selectableNav.click();
+	
+
+	}
+	
+	@Test(priority = 5, enabled = true)
+	public void sortable() throws InterruptedException{
+	WebElement sortableNav = driver.findElement(By.cssSelector
+			("#menu-item-151"));
+	
+	sortableNav.click();
+	
+	report.endTest(test);
+	report.flush();
+	driver.quit();
+	}
+}
+
+

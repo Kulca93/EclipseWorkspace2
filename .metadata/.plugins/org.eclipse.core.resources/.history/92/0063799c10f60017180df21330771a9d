@@ -1,0 +1,133 @@
+package test.test;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class theDemoSite {
+	
+	WebDriver driver;
+	WebDriver driver2;
+	ExtentReports report;
+	ExtentTest test;	
+	
+	@Test(priority = 1, enabled = true)
+	public void chromeTest() throws InterruptedException {
+		
+		// where to create the report file
+		report = new ExtentReports("C:\\Users\\Admin\\Desktop\\javaTesting\\Result\\automationreport.html", true);
+		test = report.startTest("Chrome Test"); //Start	
+		//Open Chrome and send to site
+		driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver","C:\\Developo\\Web_driver\\chromedriver.exe");
+		driver.get("http://thedemosite.co.uk/addauser.php");
+		Thread.sleep(2000);
+		
+		//Register inputs
+		WebElement registerInput = driver.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		Thread.sleep(1000);
+		WebElement registerPassword = driver.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(1000);	
+		//Click submit button
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		//Change to log in page
+		driver.get("http://thedemosite.co.uk/login.php");
+		Thread.sleep(3000);
+		
+		//Log in Inputs
+		WebElement loginInput = driver.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		Thread.sleep(1000);	
+		WebElement loginPassword = driver.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(1000);	
+		
+		//Click submit button
+		driver.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(1500);
+		
+		//Find login successful text
+		WebElement logInSuccess = driver.findElement(By.cssSelector("body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+		String logInCheck = logInSuccess.getText();
+		
+		//Compare text to Logincheck
+			if (logInCheck.equals("**Successful Login**")) {
+			test.log(LogStatus.PASS, "Chrome Test");
+		} else {
+			test.log(LogStatus.FAIL, "Chrome Test");
+		}	
+		//End test
+		report.endTest(test);
+		report.flush();
+		driver.quit();
+	}
+	
+	@Test(priority = 2, enabled = true)
+	public void fireFoxTest() throws InterruptedException {
+		
+		// where to create the report file
+		report = new ExtentReports("C:\\Users\\Admin\\Desktop\\javaTesting\\Result\\automationreport.html", true);
+		test = report.startTest("firefox Test"); //Start
+		
+		//Open Chrome and send to site
+		driver2 = new FirefoxDriver();
+		System.setProperty("webdriver.gecko.driver", "C:\\Developo\\Web_driver\\geckodriver.exe");
+		driver2.get("http://thedemosite.co.uk/addauser.php");
+		Thread.sleep(2000);
+		
+		//Register input
+		WebElement registerInput = driver2.findElement(By.name("username"));
+		registerInput.sendKeys("Kulca93");
+		Thread.sleep(1000);
+		WebElement registerPassword = driver2.findElement(By.name("password"));
+		registerPassword.sendKeys("password"); 
+		Thread.sleep(1000);	
+		
+		//Click submit button
+		driver2.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(2000);		
+		
+		//Find log in successful text
+		driver2.get("http://thedemosite.co.uk/login.php");
+		Thread.sleep(3000);
+		
+		//Login inpit
+		WebElement loginInput = driver2.findElement(By.name("username"));
+		loginInput.sendKeys("Kulca93");
+		Thread.sleep(1000);	
+		WebElement loginPassword = driver2.findElement(By.name("password"));
+		loginPassword.sendKeys("password");
+		Thread.sleep(1000);	
+		
+		//Click submit button
+		driver2.findElement(By.name("FormsButton2")).click();
+		Thread.sleep(1500);
+		
+		WebElement logInSuccess = driver2.findElement(By.cssSelector("body > table > tbody > tr > td.auto-style1 > big > blockquote > blockquote > font > center > b"));
+		
+		String logInCheck = logInSuccess.getText();
+		
+		//Compare text to Logincheck
+		if (logInCheck.equals("**Successful Login**")) {
+		test.log(LogStatus.PASS, "Firefox Test");
+		} else {
+		test.log(LogStatus.FAIL, "Firefox Test");
+		}
+		
+		report.endTest(test);
+		report.flush();
+		driver2.quit();
+	}
+}

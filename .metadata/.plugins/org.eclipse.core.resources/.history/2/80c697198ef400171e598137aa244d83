@@ -1,0 +1,44 @@
+package test.test;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class ChromeTestDriverTest {
+	
+	@BeforeClass
+	public static void method1() {
+		System.out.println("Before Class");
+	}
+	
+	@Before
+	public void method2() {
+		System.out.println("Before");
+	}
+
+	@Test
+	public void myTestMethod() throws InterruptedException{
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get("www.qa.com");
+		
+		Thread.sleep(5000);
+	}
+	
+	@After
+	public void method3() {
+		System.out.println("After");
+	}
+	
+	@AfterClass
+	public static void method4() {
+		System.out.println("AfterClass");
+	}
+	
+
+
+}
